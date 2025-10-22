@@ -1,23 +1,22 @@
-// Arquivo: api/index.js
+// Arquivo: api/index.js (Usando require para máxima compatibilidade)
 
-import express from 'express';
-import cors from 'cors'; // Importação do CORS
+// Importações usando a sintaxe require:
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
 // --- Configuração do CORS no Express ---
 const corsOptions = {
-    // Permite acesso de qualquer origem, essencial para Expo Snack
     origin: '*', 
-    // Define os métodos permitidos (OPTIONS é necessário para o CORS pre-flight)
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', 
     credentials: true,
     optionsSuccessStatus: 200 
 };
 
-app.use(cors(corsOptions)); // Aplica a configuração a todas as requisições
+app.use(cors(corsOptions));
 
-// Rota OPTIONS: Garante a resposta rápida para o pre-flight (redundante, mas útil)
+// Rota OPTIONS: Garante a resposta para o pre-flight
 app.options('*', cors(corsOptions)); 
 // ------------------------------------
 
@@ -30,9 +29,8 @@ app.get('/users', (req, res) => {
     { id: 3, name: 'Charlie' },
   ];
   
-  // Resposta com status 200 (OK) e os dados em JSON
   res.status(200).json(users);
 });
 
-// Exporta o aplicativo Express como função serverless para o Vercel
-export default app;
+// Exporta o aplicativo Express usando module.exports (CommonJS)
+module.exports = app;
